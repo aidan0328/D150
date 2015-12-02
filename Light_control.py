@@ -44,16 +44,19 @@ class LightControl:
 D150 = LightControl(115200)
 
 if(True == D150.connect()):
-    print('Open FTDI Successfully')
+    print('Open FTDI Device Successfully')
     while True:
+        print('Power On')
         D150.power_on()
-        time.sleep(3)
+        time.sleep(1)
+        print('Power Off')
         D150.power_off()
-        time.sleep(3)
+        time.sleep(1)
 else:
     print('Open FTDI Devie fail')
 
 
+print 'Close FTDI Device '
 D150.disconnet()
 
 
