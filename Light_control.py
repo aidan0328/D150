@@ -1,6 +1,8 @@
 import serial
 import time
 
+
+
 class LightControl:
 
     def __init__(self,baudrate,port = '/dev/ttyUSB0'):
