@@ -5,6 +5,12 @@ import socket
 import sys
 import light
 
+import fcntl
+import struct
+def get_ip_address(ifname):
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    return socket.inet_ntoa(fcntl.ioctl(s.fileno(),0x8915,struct.pack('256s', ifname[:15]))[20:24])
+
 """
 Step1 建立Socket
 Step2 Bind Socket
@@ -39,12 +45,12 @@ try:
     """
     try:
         serverIP = socket.gethostbyname(hostName)
-        print('已綁定成功. IP : %s' % serverIP + '  of %s Host' % hostName)
     except socket.gaierror, msg:
         print ('無法取得%s的IP. 訊息代碼：%d' % (hostName, msg[0]))
         sys.exit(1)
     try:
         serverSocket.bind((serverIP, port))
+        print('已綁定成功. IP : %s of %s Host' %(get_ip_address('wlan0'),hostName))
     except socket.error, msg:
         print('綁定失敗.訊息代碼：%d' % msg[0])
         sys.exit(1)
